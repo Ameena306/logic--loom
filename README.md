@@ -1,7 +1,8 @@
-we## QUIZ GAME
+## QUIZ GAME
 Team members
 
    1.Ameena Sherin C
+   
    2.Adheena L
    
 About   
