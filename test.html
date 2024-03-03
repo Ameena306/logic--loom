@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Quiz Game</title>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Multiple Choice Quiz Game</h2>
+        <p id="question"></p>
+        <div id="choices"></div>
+       <!-- <button onclick="checkAnswer()">Submit</button>-->
+        <p id="feedback"></p>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "Who is known as the father of modern physics?",
+                options: ["Newton", "Einstein", "Edison", "Pascal"],
+                answer: "Einstein"
+            },
+            {
+                question: "Who wrote 'Romeo and Juliet'?",
+                options: ["Shakespeare", "Hemingway", "Edison", "Nikola"],
+                answer: "Shakespeare"
+            },
+            {
+                question: "What is the largest mammal in the world?",
+                options: ["Elephant", "Lion", "Bear", "Blue whale"],
+                answer: "Blue whale"
+            },
+            {
+                question: "What is the least populous state in India?",
+                options: ["Tamil Nadu", "Sikkim", "Maharashtra", "Bengal"],
+                answer: "Sikkim"
+            },
+            {
+                question: "What is the largest ocean on Earth?",
+                options: ["Pacific", "Indian", "Atlantic", "Southern"],
+                answer: "Pacific"
+            },
+            {
+                question: "What is the longest river in the world?",
+                options: ["Ganga", "Nile", "Amazon", "Niger"],
+                answer:"Nile"
+            },
+            {
+                 question: "Which is the largest iceland in the world ?",
+                options: ["New Guinea", "Andaman Nicobar", "Greenland", "Hawaii"],
+                answer:"Greenland"
+            },
+            {
+                 question: "Which is the largest flower in the World?",
+                options: ["Rafflesia", "Jasmine", "Balloon flower", "Chamellia"],
+                answer:"Rafflesia"
+            },
+            {
+                 question: "Which of the following languages has the longest alphabet?",
+                options: ["Greek", "Russian", "Arabic", "French"],
+                answer:"Russian"
+            },
+            {
+                 question: "Which app has the most total users?",
+                options: ["Tik Tok", "Snapchat", "Instagram", "Whatasapp"],
+                answer:"Instagram"
+            }
+
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.langth-1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function loadQuestion() {
+            const questionElement = document.getElementById("question");
+            const choicesElement = document.getElementById("choices");
+            const currentQuizData = quizData[currentQuestion];
+
+            questionElement.textContent = currentQuizData.question;
+            choicesElement.innerHTML = "";
+
+            shuffleArray(currentQuizData.options).forEach(option => {
+                const choiceElement = document.createElement("button");
+                choiceElement.textContent = option;
+                choiceElement.onclick = function () {
+                    checkAnswer(option);
+                };
+                choicesElement.appendChild(choiceElement);
+            });
+        }
+
+        function checkAnswer(answer) {
+            const currentQuizData = quizData[currentQuestion];
+
+            if (answer.toLowerCase() === currentQuizData.answer.toLowerCase()) {
+                score++;
+                document.getElementById("feedback").textContent = "Correct!";
+            } else {
+                document.getElementById("feedback").textContent = "Wrong! The correct answer is: " + currentQuizData.answer;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById("question").textContent = "Quiz completed!";
+            document.getElementById("choices").innerHTML = "";
+            document.getElementById("feedback").textContent = "Your score: " + score + " out of " + quizData.length;
+            document.querySelector("button").style.display = "none";
+        }
+
+        shuffleArray(quizData); // Shuffle the quizData array before starting the quiz
+        loadQuestion();
+    </script>
+</body>
+</html>
